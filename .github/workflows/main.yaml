@@ -28,4 +28,4 @@ jobs:
             exit 1
           fi
 
-          echo "::add-mask::$id_token" # Mask the token in logs
+          # echo "::add-mask::$id_token" # Mask the token in logs
