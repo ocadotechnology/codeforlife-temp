@@ -13,10 +13,10 @@ jobs:
         id: get-id-token
         run: |
           response="$(
-            curl --request=POST \
+            curl --request POST \
               --silent \
-              --header="Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-              --header="Content-Type: application/json" \
+              --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+              --header "Content-Type: application/json" \
               "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=example.com"
           )"
 
