@@ -1,0 +1,31 @@
+name: Check Pull Request Authors Signed Latest Agreement
+
+on:
+  push:
+
+jobs:
+  check-pr-authors:
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+    steps:
+      - name: Get ID Token
+        id: get-id-token
+        run: |
+          response="$(
+            curl --request=POST \
+              --silent \
+              --header="Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+              --header="Content-Type: application/json" \
+              "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=example.com"
+          )"
+
+          echo "$response"
+
+          id_token="$(echo "$response" | jq --raw-output '.value')"
+          if [ -z "$id_token" ]; then
+            echo "Error: Failed to retrieve OIDC token."
+            exit 1
+          fi
+
+          echo "::add-mask::$id_token" # Mask the token in logs
